@@ -4,7 +4,7 @@ const User = require("../models/User");
 const { Word } = require("../models/Word");
 
 // login
-router.get("/auth", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     let { uname, pass } = req.query;
     let user = await User.findOne({ uname, pass });
@@ -17,7 +17,7 @@ router.get("/auth", async (req, res) => {
 });
 
 // sign up
-router.post("/auth", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     let { uname, pass } = req.body;
     let existing = await User.find({ uname });
@@ -36,7 +36,7 @@ router.post("/auth", async (req, res) => {
 });
 
 // change user data (not words)
-router.patch("/auth", async (req, res) => {
+router.patch("/", async (req, res) => {
   try {
     let { _id, keys, vals } = req.body;
     for (let i = 0; i < keys.length; i++) {
@@ -52,7 +52,7 @@ router.patch("/auth", async (req, res) => {
 });
 
 // remove users
-router.delete("/auth", async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
     let { _id } = req.query;
     let user = await User.findOne({ _id });
