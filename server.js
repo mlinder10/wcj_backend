@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const PORT = process.env.PORT || 3000;
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
-mongoose.connect(process.env.DATABASE);
+mongoose.connect(
+  "mongodb+srv://mlinder:mlinder@wcj.tgvr9zi.mongodb.net/?retryWrites=true&w=majority"
+);
 const db = mongoose.connection;
 const User = require("./models/User");
 const { Word } = require("./models/Word");
