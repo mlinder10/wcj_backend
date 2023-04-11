@@ -4,7 +4,7 @@ const User = require("../models/User");
 const { Word } = require("../models/Word");
 
 // get all words and update user last view
-app.get("/words", async (req, res) => {
+router.get("/words", async (req, res) => {
   try {
     let { _id } = req.query;
     let user = await User.findOne({ _id });
@@ -24,7 +24,7 @@ app.get("/words", async (req, res) => {
 });
 
 // post a word
-app.post("/words", async (req, res) => {
+router.post("/words", async (req, res) => {
   let { _id, word, def } = await req.body;
   try {
     let user = await User.findOne({ _id });
@@ -43,12 +43,12 @@ app.post("/words", async (req, res) => {
   }
 });
 
-app.patch("/words", async (req, res) => {
+router.patch("/words", async (req, res) => {
   res.send("success");
 });
 
 // delete a word
-app.delete("/words", async (req, res) => {
+router.delete("/words", async (req, res) => {
   try {
     if (req.query?.type === "all") {
       await Word.deleteMany();

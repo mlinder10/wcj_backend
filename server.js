@@ -7,8 +7,6 @@ mongoose.connect(
   "mongodb+srv://mlinder:mlinder@wcj.tgvr9zi.mongodb.net/?retryWrites=true&w=majority"
 );
 const db = mongoose.connection;
-const User = require("./models/User");
-const { Word } = require("./models/Word");
 
 db.on("open", () => {
   console.log("connected to database");
