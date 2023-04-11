@@ -5,8 +5,8 @@ const PORT = process.env.PORT || 3000;
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 mongoose.connect(process.env.DATABASE);
 const db = mongoose.connection;
-const User = require("../models/User");
-const { Word } = require("../models/Word");
+const User = require("./models/User");
+const { Word } = require("./models/Word");
 
 db.on("open", () => {
   console.log("connected to database");
@@ -158,5 +158,3 @@ app.delete("/words", async (req, res) => {
     res.status(500).json("error");
   }
 });
-
-module.exports = Router;
