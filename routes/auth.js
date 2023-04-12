@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
       words: [],
       lastView: Date.now(),
     });
+    console.log(newUser);
     res.status(201).json(newUser);
   } catch (err) {
     console.error(err);
@@ -54,6 +55,10 @@ router.patch("/", async (req, res) => {
 // remove users
 router.delete("/", async (req, res) => {
   try {
+    if (req?.query?.type === "all") {
+      await User.deleteMany();
+      return res.status(200).json("success");
+    }
     let { _id } = req.query;
     let user = await User.findOne({ _id });
     for (let i = 0; i < user.words.length; i++) {
