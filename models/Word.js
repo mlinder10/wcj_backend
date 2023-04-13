@@ -4,10 +4,10 @@ const wordSchema = new mongoose.Schema({
   def: String,
   userName: String,
   userID: String,
-  reposted: Boolean,
-  reposts: {
-    default: 0,
-    type: Number,
+  originalPoster: String,
+  usersReposted: {
+    default: [],
+    type: [String],
   },
   timeEntered: {
     type: Number,
