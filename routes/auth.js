@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     let { uname, pass } = req.query;
     let user = await User.findOne({ uname, pass });
     if (user !== null) return res.status(200).json(user);
-    res.status(400).json("Incorrect Credentials");
+    res.status(401).json("Incorrect Credentials");
   } catch (err) {
     console.error(err);
     res.status(500).json("error");

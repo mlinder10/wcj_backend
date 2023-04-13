@@ -13,7 +13,11 @@ router.get("/", async (req, res) => {
     let words = await Word.find();
     let filteredWords = [];
     for (let i = 0; i < words.length; i++) {
-      if (words[i].timeEntered > user.lastView && words[i].userID != _id)
+      if (
+        words[i].timeEntered > user.lastView &&
+        words[i].userID != _id &&
+        !words[i].reposted
+      )
         filteredWords.push(words[i]);
     }
     res.status(200).json(filteredWords);
@@ -25,7 +29,7 @@ router.get("/", async (req, res) => {
 
 // post a word
 router.post("/", async (req, res) => {
-  let { _id, word, def } = await req.body;
+  let { _id, word, def, reposted } = req.body;
   try {
     let user = await User.findOne({ _id });
     let newWord = await Word.create({
@@ -33,6 +37,7 @@ router.post("/", async (req, res) => {
       def,
       userName: user.uname,
       userID: _id,
+      reposted: reposted === true ? true : false,
     });
     await User.updateOne({ _id }, { words: [...user.words, newWord] });
     let newUser = await User.findOne({ _id });
@@ -43,8 +48,17 @@ router.post("/", async (req, res) => {
   }
 });
 
+// handle repost count
 router.patch("/", async (req, res) => {
-  res.send("success");
+  try {
+    let { _id } = req.body;
+    let word = await Word.findOne({ _id });
+    await Word.updateOne({ _id }, { reposts: word.reposts + 1 });
+    res.status(202).json("success");
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+  }
 });
 
 // delete a word
