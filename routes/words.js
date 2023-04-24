@@ -14,9 +14,9 @@ router.get("/", async (req, res) => {
     let filteredWords = [];
     for (let i = 0; i < words.length; i++) {
       if (
-        // words[i].timeEntered > user.lastView &&
+        // words[i].timeEntered < user.lastView &&
         words[i].userID != _id &&
-        !words[i].reposted
+        words[i].originalPoster === words[i].userName
       )
         filteredWords.push(words[i]);
     }
